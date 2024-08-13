@@ -1,0 +1,4 @@
+we dont create a functional component inside another component 
+because everytime the outer component calls then the inner component will create again
+
+Never write useState inside if condition
