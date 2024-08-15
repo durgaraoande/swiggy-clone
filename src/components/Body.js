@@ -1,18 +1,17 @@
 import RestaurentCard from "./RestaurentCard";
-import { api } from "../constants";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 
 function filterData(inputText, restaruents) {
-  const res= restaruents.filter((restaruent) =>
+  const res = restaruents.filter((restaruent) =>
     restaruent.info.name.toLowerCase().includes(inputText.toLowerCase())
   );
   return res;
 }
 
-
 const Body = () => {
-  //useState is a hook which is used to maintain the state of the component 
+  //useState is a hook which is used to maintain the state of the component
   //useState returns an array of two values
   //first value is the current state value
   //second value is a function which is used to update the state value
@@ -28,10 +27,10 @@ const Body = () => {
   //useeffect first argument is a function which will be executed
   //useeffect second argument is an array of dependencies
   //if the array is empty then the function will be executed only once after the first render
-  //if the array contains any value then the function will be executed only when the value of the array changes 
+  //if the array contains any value then the function will be executed only when the value of the array changes
   //if we give only first argument then the function will be executed after every render
 
-  useEffect(()=>{
+  useEffect(() => {
     const fetchData = async () => {
       try {
         //fetch is a function which is used to make a network request
@@ -46,16 +45,23 @@ const Body = () => {
         //setAllRestaruent and setFilteredRestaruents will re-render the component
         //setAllRestaruent and setFilteredRestaruents will update the state of the component
 
-      const response = await fetch(api);
-      const Swiggydata = await response.json();
-      setAllRestaruent(Swiggydata?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-      setFilteredRestaruents(Swiggydata?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        const response = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=16.544893&lng=81.521241");
+        const Swiggydata = await response.json();
+        console.log(Swiggydata);
+        setAllRestaruent(
+          Swiggydata?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+            ?.restaurants
+        );
+        setFilteredRestaruents(
+          Swiggydata?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+            ?.restaurants
+        );
       } catch (error) {
-      console.log(error);
+        console.log(error);
       }
     };
-      fetchData();
-  },[]);
+    fetchData();
+  }, []);
 
   console.log("render");
 
@@ -71,7 +77,6 @@ const Body = () => {
             const data = filterData(e.target.value, allRestaruents);
             setFilteredRestaruents(data);
           }}
-          
         />
         <button
           className="search-btn"
@@ -84,11 +89,21 @@ const Body = () => {
         </button>
       </div>
       <div className="cardsList">
-        {filteredRestaruents.length===0?(<Shimmer/>):(filteredRestaruents?.map((restaruent) => {
-          return (
-            <RestaurentCard {...restaruent.info} key={restaruent.info.id} />
-          );
-        }))}
+        {filteredRestaruents.length === 0 ? (
+          <Shimmer />
+        ) : (
+          filteredRestaruents?.map((restaruent) => {
+            return (
+              <Link
+                to={"/restaruent/" + restaruent.info.id}
+                key={restaruent.info.id}
+                className="card-link"
+              >
+                <RestaurentCard {...restaruent.info} />
+              </Link>
+            );
+          })
+        )}
         {/* <RestaurentCard {...restaruentList[1].info}/>
         <RestaurentCard restaruent={restaruentList[2]}/> */}
       </div>

@@ -1,3 +1,5 @@
+import {Link} from 'react-router-dom';
+
 const Header = () => {
   return (
     <div className="header">
@@ -5,9 +7,9 @@ const Header = () => {
         <img src="https://w7.pngwing.com/pngs/963/79/png-transparent-food-truck-hamburger-logo-french-fries-fast-food-truck-food-orange-truck-thumbnail.png" />
       </a>
       <ul>
-        <li>Home</li>
-        <li>About</li>
-        <li>Contact</li>
+        <Link to="/"><li>Home</li></Link>
+        <Link to="/about"><li>About</li></Link>
+        <Link to="/contact"><li>Contact</li></Link>
         <li>Cart</li>
       </ul>
     </div>
