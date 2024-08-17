@@ -2,6 +2,7 @@ import RestaurentCard from "./RestaurentCard";
 import React, { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 function filterData(inputText, restaruents) {
   const res = restaruents.filter((restaruent) =>
@@ -84,8 +85,15 @@ const Body = () => {
 
   console.log("render");
 
+
+  const onlineStatus = useOnlineStatus();
+
+  if(!onlineStatus){
+    return <h1>Offline</h1>;
+  }
+
   return (
-    <>
+    <React.Fragment>
       <div className="search-container">
         <input
           type="text"
@@ -126,7 +134,7 @@ const Body = () => {
         {/* <RestaurentCard {...restaruentList[1].info}/>
         <RestaurentCard restaruent={restaruentList[2]}/> */}
       </div>
-    </>
+    </React.Fragment>
   );
 };
 export default Body;

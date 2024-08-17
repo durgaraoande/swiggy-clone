@@ -6,7 +6,7 @@ const useRestaruentData=(id)=>{
 
     useEffect(()=>{
         fetchData();
-    })
+    },[]);
     const fetchData= async()=>{
         const data=await fetch(Menu_Api+id);
         const json=await data.json();
