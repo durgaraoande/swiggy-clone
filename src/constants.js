@@ -646,3 +646,5 @@ export const restaruentList = [
 // };
 
 export const Img_Url= "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/";
+
+export const Menu_Api="https://www.swiggy.com/mapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=16.544893&lng=81.521241&restaurantId=";

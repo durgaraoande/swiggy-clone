@@ -1,32 +1,23 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { Img_Url } from "../constants";
 import { useParams } from "react-router-dom";
 import Shimmer from "./Shimmer";
 import ItemCard from "./ItemCard";
+import useRestaruentData from "../utils/useRestaruentData";
 
 const ResatruentMenu = () => {
   //useParams hook is used to get the parameters from the route
   //In this case, we are getting the id from the route
   //The id is used to fetch the data of the restaurant
   const { id } = useParams();
-  const [restaruent, setRestaruent] = useState(null);
+  const restaruent = useRestaruentData(id);
 
   const toggleCategory = (index) => {
     setExpandedCategories((prev) =>
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
     );
   };
-  useEffect(() => {
-    getRestaruentData();
-  }, []);
-  async function getRestaruentData() {
-    const response = await fetch(
-      "https://www.swiggy.com/mapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=16.544893&lng=81.521241&restaurantId=" +
-        id
-    );
-    const json = await response.json();
-    setRestaruent(json?.data);
-  }
+
 
   const {
     name = "",
@@ -40,6 +31,8 @@ const ResatruentMenu = () => {
   //     ?.card || {};
   const { cards = [] } =
     restaruent?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR || {};
+
+
   const [expandedCategories, setExpandedCategories] = useState([]);
 
   return restaruent == null ? (
