@@ -10,7 +10,12 @@ const ResatruentMenu = () => {
   //The id is used to fetch the data of the restaurant
   const { id } = useParams();
   const [restaruent, setRestaruent] = useState(null);
-  //const [menu, setMenu] = useState([]);
+
+  const toggleCategory = (index) => {
+    setExpandedCategories((prev) =>
+      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
+    );
+  };
   useEffect(() => {
     getRestaruentData();
   }, []);
@@ -20,11 +25,9 @@ const ResatruentMenu = () => {
         id
     );
     const json = await response.json();
-    //setMenu(json?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card?.categories[0]?.itemCards[1]?.card?.info);
     setRestaruent(json?.data);
-    //console.log(json);
   }
-  //console.log(menu?.name);
+
   const {
     name = "",
     areaName = "",
@@ -32,30 +35,63 @@ const ResatruentMenu = () => {
     costForTwoMessage = "",
     cloudinaryImageId = "",
   } = restaruent?.cards[2]?.card?.card?.info || {};
-  const { itemCards = [] } =
-    restaruent?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card
-      ?.card || {};
-  console.log(itemCards);
+  // const { itemCards = [] } =
+  //   restaruent?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card
+  //     ?.card || {};
+  const { cards = [] } =
+    restaruent?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR || {};
+  const [expandedCategories, setExpandedCategories] = useState([]);
+
   return restaruent == null ? (
     <Shimmer />
   ) : (
     <div className="restaruentMenuCard">
       <div className="restaurantDetails">
-      <img src={Img_Url + cloudinaryImageId} alt={name} />
+        <img src={Img_Url + cloudinaryImageId} alt={name} />
         <div className="details">
           {/* <h1>Restaruent Menu</h1> */}
           <h1>{name}</h1>
           <h3>{areaName}</h3>
           <h3>{avgRatingString + " stars"}</h3>
-          <h3>{costForTwoMessage}</h3> 
+          <h3>{costForTwoMessage}</h3>
         </div>
       </div>
-      <div className="menu-card">
+      {/* <div className="menu-card">
         <h1>Menu</h1>
         {itemCards.map((item) => {
-           const {name='',price='',description='',ratings={}}=item.card.info;
+           //const {name='',price='',description='',ratings={}}=item.card.info;
           //return <ItemCard name={name} price={price} description={description} ratings={ratings} key={item.card.info.id} />;
           return <ItemCard {...item.card.info} key={item.card.info.id} />;
+        })}
+      </div> */}
+
+      <div>
+        {cards.map((cardi, index) => {
+          const { title } = cardi?.card?.card;
+          const { itemCards = [] } =
+            restaruent?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards[
+              index
+            ]?.card?.card || {};
+          return (
+            itemCards[index] &&
+            itemCards[index].card.info && (
+              <div key={index}>
+                <button className="btn" onClick={() => toggleCategory(index)}>
+                  {title}
+                </button>
+                {expandedCategories.includes(index) && (
+                  <div className="menu-card">
+                    <h1>{title}</h1>
+                    <div className="item-card-container">
+                      {itemCards.map((item) => (
+                        <ItemCard {...item.card.info} key={item.card.info.id} />
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )
+          );
         })}
       </div>
     </div>

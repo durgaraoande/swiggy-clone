@@ -80,7 +80,78 @@ footer {
     text-decoration: none;
 }
 
-/* ItemCard.css */
+/* RestaruentMenu.css */
+.restaruentMenuCard {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.restaurantDetails {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.restaurantDetails img {
+  border-radius: 8px;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.details {
+  flex: 1;
+}
+
+.details h1 {
+  font-size: 24px;
+  margin: 0;
+  color: #333;
+}
+
+.details h3 {
+  font-size: 18px;
+  margin: 5px 0;
+  color: #666;
+}
+
+.menu-card {
+  margin-top: 20px;
+}
+
+.menu-card h1 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.item-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 -16px; /* Adjust for negative margin to counteract item margin */
+}
+
 .item-card {
   border: 1px solid #ccc;
   padding: 16px;
@@ -110,50 +181,19 @@ footer {
   margin-bottom: 8px;
 }
 
-.item-card .rating {
-  font-size: 1em;
-  color: #ff7b00;
-}
-
-/* RestaruentMenu.css */
-.restaruentMenuCard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 16px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.restaurantDetails {
-  display: flex;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.restaurantDetails img {
-  max-width: 200px;
-  height: auto;
-  border-radius: 8px;
-  margin-right: 16px;
-}
-
-.restaurantDetails .details {
-  text-align: left;
-}
-
-.menu-card {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  width: 100%;
-}
-
-.menu-card h1 {
-  width: 100%;
+.item-card .btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
   text-align: center;
-  margin-bottom: 16px;
+  display: inline-block;
+  font-size: 1em;
+  margin-top: 8px;
+}
+
+.item-card .btn:hover {
+  background-color: #0056b3;
 }

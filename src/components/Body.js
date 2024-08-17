@@ -30,6 +30,25 @@ const Body = () => {
   //if the array contains any value then the function will be executed only when the value of the array changes
   //if we give only first argument then the function will be executed after every render
 
+  /***
+   * useEffect(()=>{
+   * console.log("useEffect");
+   *  return ()=>{
+   * console.log("cleanup useeffect return");
+   * }
+   * },[])  
+   * 
+   * this code is equivalent to componentWIllUnmount
+   * that means the function inside the useEffect will be executed only once after the first render
+   * and the return function will be executed when the component is unmounted
+   * unmounted means the component is removed from the dom
+   * it happens when we navigate to another page
+   * or when we remove the component from the dom
+   * return function is used to do some cleanup work
+   * like removing event listeners or clearing intervals
+   * 
+   */
+
   useEffect(() => {
     const fetchData = async () => {
       try {
