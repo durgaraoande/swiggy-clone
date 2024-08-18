@@ -38,17 +38,17 @@ const ResatruentMenu = () => {
   return restaruent == null ? (
     <Shimmer />
   ) : (
-    <div className="restaruentMenuCard">
-      <div className="restaurantDetails">
-        <img src={Img_Url + cloudinaryImageId} alt={name} />
+        <div className="p-4 m-4 border border-gray-300 rounded-lg shadow-lg bg-white">
+      <div className="flex items-center mb-4">
+        <img className="w-32 h-32 object-cover rounded-lg mr-4" src={Img_Url + cloudinaryImageId} alt={name} />
         <div className="details">
-          {/* <h1>Restaruent Menu</h1> */}
-          <h1>{name}</h1>
-          <h3>{areaName}</h3>
-          <h3>{avgRatingString + " stars"}</h3>
-          <h3>{costForTwoMessage}</h3>
+          <h1 className="text-2xl font-bold mb-2">{name}</h1>
+          <h3 className="text-lg text-gray-600 mb-1">{areaName}</h3>
+          <h3 className="text-lg text-yellow-500 mb-1">{avgRatingString + " stars"}</h3>
+          <h3 className="text-lg text-green-600">{costForTwoMessage}</h3>
         </div>
       </div>
+
       {/* <div className="menu-card">
         <h1>Menu</h1>
         {itemCards.map((item) => {
@@ -57,7 +57,7 @@ const ResatruentMenu = () => {
           return <ItemCard {...item.card.info} key={item.card.info.id} />;
         })}
       </div> */}
-
+    
       <div>
         {cards.map((cardi, index) => {
           const { title } = cardi?.card?.card;
@@ -68,14 +68,14 @@ const ResatruentMenu = () => {
           return (
             itemCards[index] &&
             itemCards[index].card.info && (
-              <div key={index}>
-                <button className="btn" onClick={() => toggleCategory(index)}>
+              <div key={index} className="mb-4">
+                <button className="btn bg-blue-500 text-white py-2 px-4 rounded-lg mb-2" onClick={() => toggleCategory(index)}>
                   {title}
                 </button>
                 {expandedCategories.includes(index) && (
-                  <div className="menu-card">
-                    <h1>{title}</h1>
-                    <div className="item-card-container">
+                  <div className="menu-card p-4 border border-gray-300 rounded-lg shadow-md bg-gray-50">
+                    <h1 className="text-xl font-semibold mb-2">{title}</h1>
+                    <div className="item-card-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                       {itemCards.map((item) => (
                         <ItemCard {...item.card.info} key={item.card.info.id} />
                       ))}

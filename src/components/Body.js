@@ -1,4 +1,4 @@
-import RestaurentCard from "./RestaurentCard";
+import RestaurentCard, { withPromoted } from "./RestaurentCard";
 import React, { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
@@ -10,6 +10,8 @@ function filterData(inputText, restaruents) {
   );
   return res;
 }
+
+const RestaurentCardWithVeg = withPromoted(RestaurentCard);
 
 const Body = () => {
   //useState is a hook which is used to maintain the state of the component
@@ -37,8 +39,8 @@ const Body = () => {
    *  return ()=>{
    * console.log("cleanup useeffect return");
    * }
-   * },[])  
-   * 
+   * },[])
+   *
    * this code is equivalent to componentWIllUnmount
    * that means the function inside the useEffect will be executed only once after the first render
    * and the return function will be executed when the component is unmounted
@@ -47,7 +49,7 @@ const Body = () => {
    * or when we remove the component from the dom
    * return function is used to do some cleanup work
    * like removing event listeners or clearing intervals
-   * 
+   *
    */
 
   useEffect(() => {
@@ -65,7 +67,9 @@ const Body = () => {
         //setAllRestaruent and setFilteredRestaruents will re-render the component
         //setAllRestaruent and setFilteredRestaruents will update the state of the component
 
-        const response = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=16.544893&lng=81.521241");
+        const response = await fetch(
+          "https://www.swiggy.com/dapi/restaurants/list/v5?lat=16.544893&lng=81.521241"
+        );
         const Swiggydata = await response.json();
         console.log(Swiggydata);
         setAllRestaruent(
@@ -83,30 +87,35 @@ const Body = () => {
     fetchData();
   }, []);
 
-  console.log("render");
-
+  // console.log("render");
+  console.log(allRestaruents);
 
   const onlineStatus = useOnlineStatus();
 
-  if(!onlineStatus){
-    return <h1>Offline</h1>;
+  if (!onlineStatus) {
+    return (
+      <h1 className="bg-black text-white w-max h-max p-24 text-center">
+        Offline
+      </h1>
+    );
   }
 
   return (
     <React.Fragment>
-      <div className="search-container">
+      <div className="p-2 m-1">
         <input
           type="text"
           placeholder="Enter Text"
+          className="border border-gray-400 rounded-md p-2"
           value={inputText}
           onChange={(e) => {
             setInputText(e.target.value);
-            const data = filterData(e.target.value, allRestaruents);
-            setFilteredRestaruents(data);
+            // const data = filterData(e.target.value, allRestaruents);
+            // setFilteredRestaruents(data);
           }}
         />
         <button
-          className="search-btn"
+          className="bg-blue-400 text-white px-4 py-2 rounded-md ml-2"
           onClick={() => {
             const data = filterData(inputText, allRestaruents);
             setFilteredRestaruents(data);
@@ -115,7 +124,7 @@ const Body = () => {
           Search
         </button>
       </div>
-      <div className="cardsList">
+      <div className="flex flex-wrap justify-center">
         {filteredRestaruents.length === 0 ? (
           <Shimmer />
         ) : (
@@ -124,15 +133,17 @@ const Body = () => {
               <Link
                 to={"/restaruent/" + restaruent.info.id}
                 key={restaruent.info.id}
-                className="card-link"
+                className="m-4"
               >
-                <RestaurentCard {...restaruent.info} />
+                {(restaruent.info.veg===true) ? (
+                  <RestaurentCardWithVeg {...restaruent.info} />
+                ) : (
+                  <RestaurentCard {...restaruent.info} />
+                )}
               </Link>
             );
           })
         )}
-        {/* <RestaurentCard {...restaruentList[1].info}/>
-        <RestaurentCard restaruent={restaruentList[2]}/> */}
       </div>
     </React.Fragment>
   );
