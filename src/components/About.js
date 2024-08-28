@@ -1,5 +1,7 @@
 import Profile from "./Profile";
 import React from "react";
+import { useContext } from "react";
+import UserContext from "../utils/UserContext";
 class About extends React.Component {
   constructor(props) {
     super(props);
@@ -8,11 +10,16 @@ class About extends React.Component {
   compnentDidMount() {
     console.log("Parent ComponentDidMount");
   }
+
   render() {
     return (
       <div>
         <h1>About Us</h1>
-        {console.log("Parent Render")}
+        <h2 className="text-lg font-bold">
+          <UserContext.Consumer>
+            {(data)=><h1>{data.user}</h1>}
+          </UserContext.Consumer>
+        </h2>
         <p>
           We are a group of developers who are passionate about programming and
           building software.

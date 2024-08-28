@@ -1,8 +1,9 @@
 import RestaurentCard, { withPromoted } from "./RestaurentCard";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 function filterData(inputText, restaruents) {
   const res = restaruents.filter((restaruent) =>
@@ -25,6 +26,8 @@ const Body = () => {
   const [inputText, setInputText] = useState("");
   const [allRestaruents, setAllRestaruent] = useState([]);
   const [filteredRestaruents, setFilteredRestaruents] = useState([]);
+
+  
 
   //useEffect will execute only once after the first render
   //useeffect first argument is a function which will be executed
@@ -88,7 +91,7 @@ const Body = () => {
   }, []);
 
   // console.log("render");
-  console.log(allRestaruents);
+  //console.log(allRestaruents);
 
   const onlineStatus = useOnlineStatus();
 
@@ -99,6 +102,8 @@ const Body = () => {
       </h1>
     );
   }
+
+  const { userName, setUserName } = useContext(UserContext);
 
   return (
     <React.Fragment>
@@ -124,8 +129,17 @@ const Body = () => {
           Search
         </button>
       </div>
+      <div>
+        <input
+          type="text"
+          placeholder="Enter userName"
+          className="border border-black"
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
+        />
+      </div>
       <div className="flex flex-wrap justify-center">
-        {filteredRestaruents.length === 0 ? (
+        {filteredRestaruents?.length === 0 ? (
           <Shimmer />
         ) : (
           filteredRestaruents?.map((restaruent) => {
@@ -135,7 +149,7 @@ const Body = () => {
                 key={restaruent.info.id}
                 className="m-4"
               >
-                {(restaruent.info.veg===true) ? (
+                {restaruent.info.veg === true ? (
                   <RestaurentCardWithVeg {...restaruent.info} />
                 ) : (
                   <RestaurentCard {...restaruent.info} />

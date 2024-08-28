@@ -4,3 +4,7 @@ because everytime the outer component calls then the inner component will create
 Never write useState inside if condition
 
 rafce to generate component
+
+# 2 types of routing in web apps
+ - client side routing
+ - server side routing 

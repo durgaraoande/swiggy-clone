@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Img_Url } from "../constants";
 import { useParams } from "react-router-dom";
 import Shimmer from "./Shimmer";
-import ItemCard from "./ItemCard";
 import useRestaruentData from "../utils/useRestaruentData";
 import RestaruentCatagory from "./RestaruentCatagory";
 
@@ -48,13 +47,21 @@ const ResatruentMenu = () => {
         </div>
       </div>
       <div>
+        {/*  lifting the state up means giving the super powers to the parent componet to access child componet using state
+        we can manage single state for all children of parent ike showIndex */}
+        {/* controlled and uncontrolled componets => one component is controlled by other component is controlled componet
+        => else uncontrolled component */}
         {filteredCards.map((cards, index) => (
           <RestaruentCatagory
             key={cards?.card?.card?.title}
             data={cards?.card?.card}
             showItems={index === showIndex ? true : false}
             // setShowIndex={() => setShowIndex(index)}
-            setShowIndex={(index===showIndex)?() => setShowIndex(null):()=>setShowIndex(index)}
+            setShowIndex={
+              index === showIndex
+                ? () => setShowIndex(null)
+                : () => setShowIndex(index)
+            }
           />
         ))}
       </div>

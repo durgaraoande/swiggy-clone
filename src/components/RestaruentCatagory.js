@@ -8,8 +8,8 @@ const RestaruentCatagory = ({ data , showItems,setShowIndex}) => {
     setShowIndex();
   }
   return (
-    <div className="w-6/12 m-auto my-4 bg-gray-50 p-4 shadow-lg cursor-pointer" onClick={handleClick}>
-      <div className=" flex justify-between ">
+    <div className="w-6/12 m-auto my-4 bg-gray-50 p-4 shadow-lg cursor-pointer" >
+      <div className=" flex justify-between " onClick={handleClick}>
         <span className="font-bold text-lg">
           {data?.title} ({data?.itemCards?.length})
         </span>

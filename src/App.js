@@ -1,6 +1,5 @@
-import React,{lazy,Suspense} from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
-
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import About from "./components/About";
@@ -9,8 +8,12 @@ import Body from "./components/Body";
 import Error from "./components/Error";
 import RestaruentMenu from "./components/RestaruentMenu";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import UserContext from "./utils/UserContext";
+import appStore from "./utils/appStore";
+import { Provider } from "react-redux";
+import Cart from "./components/Cart";
 
-const Grocery=lazy(()=>import("./components/Grocery"));
+const Grocery = lazy(() => import("./components/Grocery"));
 /***
  * Suspense is a component which is used to show a fallback component until the lazy component is loaded
  * Suspense takes one argument which is a fallback component
@@ -27,15 +30,28 @@ const Grocery=lazy(()=>import("./components/Grocery"));
  */
 
 const AppLayout = () => {
+  const [userName, setUserName] = useState();
+
+  //authentication
+  useEffect(() => {
+    //making api call
+    const data = {
+      name: "durga rao",
+    };
+    setUserName(data.name);
+  },[]);
   return (
-    <>
-      <Header />
-      <Outlet />
-      {/* //Outlet is a component which is used to render the child components of the parent component
+    //Provider is a component which is used to provide the store to the components
+    <Provider store={appStore}>
+      <UserContext.Provider value={{ userName: userName, setUserName }}>
+        <Header />
+        <Outlet />
+        {/* //Outlet is a component which is used to render the child components of the parent component
       //Outlet is used to render the child components of the parent component based on the path
        */}
-      <Footer />
-    </>
+        <Footer />
+      </UserContext.Provider>
+    </Provider>
   );
 };
 
@@ -59,14 +75,20 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/grocery",
-        element:<Suspense fallback={<h1>Loading........</h1>}>
-          <Grocery />
-        </Suspense> ,
+        element: (
+          <Suspense fallback={<h1>Loading........</h1>}>
+            <Grocery />
+          </Suspense>
+        ),
       },
       {
-        path:"restaruent/:id",
-        element:<RestaruentMenu/>
-      }
+        path: "restaruent/:id",
+        element: <RestaruentMenu />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
+      },
     ],
   },
 ]);
