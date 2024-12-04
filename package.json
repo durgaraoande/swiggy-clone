@@ -4,7 +4,8 @@
   "description": "sample react",
   "main": "App.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "react-scripts build"
   },
   "repository": {
     "type": "git",
