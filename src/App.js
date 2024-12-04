@@ -1,5 +1,6 @@
 import React, { lazy, Suspense, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
+import { HashRouter as Router, RouterProvider } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import About from "./components/About";
@@ -7,11 +8,10 @@ import Contact from "./components/Contact";
 import Body from "./components/Body";
 import Error from "./components/Error";
 import RestaruentMenu from "./components/RestaruentMenu";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import Cart from "./components/Cart";
 import UserContext from "./utils/UserContext";
 import appStore from "./utils/appStore";
 import { Provider } from "react-redux";
-import Cart from "./components/Cart";
 
 const Grocery = lazy(() => import("./components/Grocery"));
 /***
@@ -93,5 +93,11 @@ const appRouter = createBrowserRouter([
   },
 ]);
 
+// const root = ReactDOM.createRoot(document.getElementById("root"));
+// root.render(<RouterProvider router={appRouter} />);
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<RouterProvider router={appRouter} />);
+root.render(
+  <Router>
+    <RouterProvider router={appRouter} />
+  </Router>
+);
